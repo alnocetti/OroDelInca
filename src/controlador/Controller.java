@@ -1,7 +1,7 @@
 package controlador;
 
-import modelo.Cliente;
-import vista.Principal;
+import modelo.*;
+import vista.*;
 
 public class Controller {
 	
@@ -20,6 +20,20 @@ public class Controller {
 	}
 	
 	public void agregarCliente(Cliente cliente){
+		
+	}
+	
+	public boolean getLogin(UsuarioView usuarioView){
+		return false;
+	}
+	
+	public Usuario fromViewToUsuario(UsuarioView usuarioView){
+		Usuario usuario = new Usuario();
+		usuario.setApellido(usuarioView.getApellido());
+		usuario.setNombre(usuarioView.getNombre());
+		usuario.setIdUsuario(usuarioView.getIdUsuario());
+		usuario.setClave(usuarioView.getClave());
+		return usuario;
 		
 	}
 }
