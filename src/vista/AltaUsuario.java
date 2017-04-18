@@ -1,113 +1,89 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JEditorPane;
+import javax.swing.JPasswordField;
+import javax.swing.border.LineBorder;
 
 import controlador.Controller;
 import dto.UsuarioDTO;
 import exceptions.UsuarioException;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
+import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 
-public class AltaUsuario extends JFrame {
-
+public class AltaUsuario extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField textName;
-	private JTextField textLastName;
-	private JTextField txtAuto;
 	private JPasswordField passwordField;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the frame.
+	 * Create the panel.
 	 */
 	public AltaUsuario() {
-		setTitle("Alta usuario");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 213, 218);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Nombre:");
-		lblNewLabel.setBounds(10, 33, 47, 14);
-		contentPane.add(lblNewLabel);
+		JLabel lblNewLabel = new JLabel("Nombre");
+		lblNewLabel.setBounds(10, 11, 48, 20);
+		add(lblNewLabel);
 		
 		JLabel lblApellido = new JLabel("Apellido");
-		lblApellido.setBounds(10, 58, 47, 14);
-		contentPane.add(lblApellido);
+		lblApellido.setBounds(10, 42, 48, 20);
+		add(lblApellido);
 		
-		JLabel lblId = new JLabel("ID: ");
-		lblId.setBounds(10, 83, 47, 14);
-		contentPane.add(lblId);
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(10, 73, 59, 20);
+		add(lblPassword);
 		
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(10, 108, 57, 14);
-		contentPane.add(lblPassword);
+		textField = new JTextField();
+		textField.setBounds(86, 11, 106, 20);
+		add(textField);
+		textField.setColumns(10);
 		
-		textName = new JTextField();
-		textName.setBounds(75, 30, 86, 20);
-		contentPane.add(textName);
-		textName.setColumns(10);
-		
-		textLastName = new JTextField();
-		textLastName.setBounds(75, 55, 86, 20);
-		contentPane.add(textLastName);
-		textLastName.setColumns(10);
-		
-		txtAuto = new JTextField();
-		txtAuto.setText("Auto");
-		txtAuto.setEditable(false);
-		txtAuto.setBounds(75, 80, 86, 20);
-		contentPane.add(txtAuto);
-		txtAuto.setColumns(10);
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(86, 42, 106, 20);
+		add(textField_1);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(75, 105, 86, 20);
-		contentPane.add(passwordField);
+		passwordField.setBounds(86, 73, 106, 20);
+		add(passwordField);
 		
-		JButton btnNewButton = new JButton("Guardar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				UsuarioDTO ud = new UsuarioDTO();
-				ud.setNombre(textName.getText());
-				ud.setApellido(textLastName.getText());
+				ud.setNombre(textField.getText());
+				ud.setApellido(textField_1.getText());
 				ud.setClave(passwordField.getText());
+				//final JPanel panel = new JPanel();
 				try {
 					Controller.getInstance().agregarUsuario(ud);
-				} catch (UsuarioException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Usuario guardado", "Mensaje", 1);
+					textField.setText("");
+					textField_1.setText("");
+					
+				} catch (UsuarioException e1) {					
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					textField.setText("");
+					textField_1.setText("");
+					
+					e1.printStackTrace();
 				}
 			}
 		});
-		btnNewButton.setBounds(10, 146, 78, 23);
-		contentPane.add(btnNewButton);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnGuardar.setBounds(10, 106, 89, 23);
+		add(btnGuardar);
 				
-			}
-		});
-		btnCancelar.setBounds(98, 146, 89, 23);
-		contentPane.add(btnCancelar);
+
 	}
 }

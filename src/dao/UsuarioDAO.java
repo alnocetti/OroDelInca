@@ -66,7 +66,7 @@ public class UsuarioDAO {
 			session.save(usuarioDTO.toEntity());
 			session.close();
 		}else{
-			throw new UsuarioException("El usuario ya existe");
+			throw new UsuarioException("El usuario ya existe");			
 		}
 			
 	}

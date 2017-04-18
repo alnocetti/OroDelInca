@@ -8,7 +8,7 @@ import vista.Login;
 import vista.Principal;
 
 public class Controller {
-	
+	private static Login login;
 	private static Controller instance;
 	
 	private Controller(){}
@@ -22,7 +22,7 @@ public class Controller {
 	public static void main(String[] args)
 	{
 		new Controller();
-		Login login = new Login();
+		login = new Login();
 		login.setVisible(true);
 	}
 	
@@ -35,6 +35,7 @@ public class Controller {
 		if (dto.getClave().equals(nuevo.getClave())){
 			Principal principal = new Principal();
 			principal.setVisible(true);
+			login.setVisible(false);
 		}
 		return;
 	}

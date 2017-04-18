@@ -19,6 +19,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JTabbedPane;
+import javax.swing.JLayeredPane;
 
 public class Principal extends JFrame {
 
@@ -28,6 +33,10 @@ public class Principal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final Action action = new SwingAction();
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -50,7 +59,7 @@ public class Principal extends JFrame {
 	 */
 	public Principal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 100, 450, 300);
+		setBounds(50, 100, 450, 300);			
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -82,11 +91,15 @@ public class Principal extends JFrame {
 		JMenu mnUsuarios = new JMenu("Usuarios");
 		menuBar.add(mnUsuarios);
 		
+		AltaUsuario altaUsuario = new AltaUsuario();
+		altaUsuario.setVisible(false);
+		add(altaUsuario);
+		
 		JMenuItem mntmAlta = new JMenuItem("Alta");
 		mntmAlta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AltaUsuario altaUsuario = new AltaUsuario();
+			public void actionPerformed(ActionEvent e) {	
 				altaUsuario.setVisible(true);
+				contentPane.repaint();
 			}
 		});
 		mnUsuarios.add(mntmAlta);
@@ -95,11 +108,12 @@ public class Principal extends JFrame {
 		menuBar.add(mnAyuda);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Info");
-		mnAyuda.add(mntmNewMenuItem_3);
+		mnAyuda.add(mntmNewMenuItem_3);		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 	}
 
 	//@Override
