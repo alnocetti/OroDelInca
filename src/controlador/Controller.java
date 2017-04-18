@@ -1,4 +1,6 @@
 package controlador;
+import org.hibernate.HibernateException;
+
 import dao.UsuarioDAO;
 import dto.UsuarioDTO;
 import exceptions.UsuarioException;
@@ -34,6 +36,11 @@ public class Controller {
 			Principal principal = new Principal();
 			principal.setVisible(true);
 		}
+		return;
+	}
+	
+	public void agregarUsuario(UsuarioDTO usuarioDTO) throws  UsuarioException{
+		UsuarioDAO.getInstance().insertUsuario(usuarioDTO);
 		return;
 	}
 			

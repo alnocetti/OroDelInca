@@ -17,6 +17,8 @@ import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class Principal extends JFrame {
 
@@ -25,6 +27,7 @@ public class Principal extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private final Action action = new SwingAction();
 
 	/**
 	 * Launch the application.
@@ -76,6 +79,18 @@ public class Principal extends JFrame {
 		JMenu mnNewMenu_2 = new JMenu("Facturaci\u00F3n");
 		menuBar.add(mnNewMenu_2);
 		
+		JMenu mnUsuarios = new JMenu("Usuarios");
+		menuBar.add(mnUsuarios);
+		
+		JMenuItem mntmAlta = new JMenuItem("Alta");
+		mntmAlta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AltaUsuario altaUsuario = new AltaUsuario();
+				altaUsuario.setVisible(true);
+			}
+		});
+		mnUsuarios.add(mntmAlta);
+		
 		JMenu mnAyuda = new JMenu("Ayuda");
 		menuBar.add(mnAyuda);
 		
@@ -92,5 +107,12 @@ public class Principal extends JFrame {
 		// TODO Auto-generated method stub
 		
 	}
-
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
 }

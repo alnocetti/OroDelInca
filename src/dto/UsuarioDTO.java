@@ -1,5 +1,7 @@
 package dto;
 
+import entities.UsuarioEntity;
+
 public class UsuarioDTO {
 	private String nombre;
 	private String apellido;
@@ -40,6 +42,13 @@ public class UsuarioDTO {
 		this.password = clave;
 	}
 	
+	public UsuarioEntity toEntity(){
+		UsuarioEntity ue = new UsuarioEntity();
+		ue.setNombre(nombre);
+		ue.setApellido(apellido);
+		ue.setClave(password);
+		return ue;
+	}
 	
 
 }
