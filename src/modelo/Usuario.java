@@ -1,26 +1,29 @@
 package modelo;
 
-import javax.persistence.*;
 
-@Table(name = "usuairos")
+import dto.UsuarioDTO;
+import entities.UsuarioEntity;
+
 public class Usuario {
 	
-	@Column(name="nombre")
 	private String nombre;
-	@Column(name="apellido")
 	private String apellido;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int idUsuario;
-	@Column(name="password")
-	private String clave;
+	private String password;
 	
-	public Usuario(String nombre, String apellido, int idUsuario, String clave) {
+	public Usuario(String nombre, String apellido, int idUsuario, String password) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.idUsuario = idUsuario;
-		this.clave = clave;
+		this.password = password;
+	}
+	
+	public Usuario(UsuarioEntity ue){
+		this.nombre = ue.getNombre();
+		this.apellido = ue.getApellido();
+		this.idUsuario = ue.getIdUsuario();
+		this.password = ue.getClave();
 	}
 
 	public Usuario() {
@@ -52,13 +55,31 @@ public class Usuario {
 	}
 
 	public String getClave() {
-		return clave;
+		return password;
 	}
 
 	public void setClave(String clave) {
-		this.clave = clave;
+		this.password = clave;
 	}
 	
+	public Usuario fromDTOToUsuario(UsuarioDTO usuarioDTO){
+		Usuario usuario = new Usuario();
+		usuario.setApellido(usuarioDTO.getApellido());
+		usuario.setNombre(usuarioDTO.getNombre());
+		usuario.setIdUsuario(usuarioDTO.getIdUsuario());
+		usuario.setClave(usuarioDTO.getClave());
+		return usuario;	
+	}
+	
+	public UsuarioDTO toDTO(){
+		return new UsuarioDTO(nombre,apellido,idUsuario,password);
+	}
+	
+	public boolean getLogin(int idUsu,String pass){
+		if (this.idUsuario == idUsu && this.password.equals(pass))
+			return true;
+		return false;
+	}
 	
 
 }

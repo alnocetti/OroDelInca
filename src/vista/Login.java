@@ -1,6 +1,6 @@
 package vista;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,24 +8,26 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Imagenes.*;
+import controlador.Controller;
+import dto.UsuarioDTO;
+import exceptions.UsuarioException;
 
 import javax.swing.JLabel;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import java.awt.Window.Type;
-import javax.swing.UIManager;
-import java.awt.Panel;
-import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class Login extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
@@ -85,6 +87,20 @@ public class Login extends JFrame {
 		textField.setColumns(10);
 		
 		JButton btnIngresar = new JButton("Ingresar");
+		btnIngresar.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent arg0) {
+				UsuarioDTO dto = new UsuarioDTO();
+				dto.setNombre(textField.getText());
+				dto.setClave(passwordField.getText());
+				try {
+					Controller.getInstance().getLogin(dto);
+				} catch (UsuarioException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		btnIngresar.setBounds(172, 206, 89, 23);
 		contentPane.add(btnIngresar);
 		

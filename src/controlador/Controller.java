@@ -1,68 +1,40 @@
 package controlador;
-
-
-import modelo.*;
-import vista.*;
-import java.util.HashSet;
-import java.util.Set;
-
-import modelo.Cliente;
+import dao.UsuarioDAO;
+import dto.UsuarioDTO;
+import exceptions.UsuarioException;
+import vista.Login;
 import vista.Principal;
 
 public class Controller {
-	Set<Cliente> clientes;
+	
+	private static Controller instance;
+	
+	private Controller(){}
+	
+	public static Controller getInstance(){
+		if (instance == null)
+			instance = new Controller();
+		return instance;
+	}
 	
 	public static void main(String[] args)
 	{
 		new Controller();
+		Login login = new Login();
+		login.setVisible(true);
 	}
 	
-	public Controller(){
-		this.clientes = new HashSet<Cliente>();
-		iniciar();
+	public UsuarioDTO getUsuarioByID(int idUsuario) throws UsuarioException{
+		return UsuarioDAO.getInstance().getUsuarioById(idUsuario).toDTO();
 	}
 	
-	private void iniciar(){
-		Principal ventana = new Principal();
-		ventana.setVisible(true);
-	}
-	
-	public void agregarCliente(Cliente cliente){
-		if (existeCliente(cliente)){
-			return;
+	public void getLogin(UsuarioDTO dto) throws UsuarioException{
+		UsuarioDTO nuevo = UsuarioDAO.getInstance().getUsuarioByName(dto.getNombre()).toDTO();
+		if (dto.getClave().equals(nuevo.getClave())){
+			Principal principal = new Principal();
+			principal.setVisible(true);
 		}
 		return;
 	}
-	
-	public boolean getLogin(UsuarioView usuarioView){
-		return false;
-	}
-	
-	public Usuario fromViewToUsuario(UsuarioView usuarioView){
-		Usuario usuario = new Usuario();
-		usuario.setApellido(usuarioView.getApellido());
-		usuario.setNombre(usuarioView.getNombre());
-		usuario.setIdUsuario(usuarioView.getIdUsuario());
-		usuario.setClave(usuarioView.getClave());
-		return usuario;
-		
-	}
-	public Cliente buscarClientePorID(int idCliente){
-		for(Cliente i : clientes){
-			if(i.getIdCliente() == idCliente)
-				return i;
-		}
-		return null;
-	}
-	
-	public boolean existeCliente(Cliente cliente){
-		for(Cliente i : clientes){
-			if(i.getIdCliente() == cliente.getIdCliente()){
-				return true;
-			}
-		}
-		return false;
-	}
-	
-
+			
 }

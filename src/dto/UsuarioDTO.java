@@ -1,16 +1,19 @@
-package vista;
+package dto;
 
-public class UsuarioView {
+public class UsuarioDTO {
 	private String nombre;
 	private String apellido;
 	private int idUsuario;
-	private String clave;
-	public UsuarioView(String nombre, String apellido, int idUsuario, String clave) {
+	private String password;
+	public UsuarioDTO(String nombre, String apellido, int idUsuario, String clave) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.idUsuario = idUsuario;
-		this.clave = clave;
+		this.password = clave;
+	}
+	public UsuarioDTO() {
+		// TODO Auto-generated constructor stub
 	}
 	public String getNombre() {
 		return nombre;
@@ -31,10 +34,10 @@ public class UsuarioView {
 		this.idUsuario = idUsuario;
 	}
 	public String getClave() {
-		return clave;
+		return password;
 	}
 	public void setClave(String clave) {
-		this.clave = clave;
+		this.password = clave;
 	}
 	
 	
