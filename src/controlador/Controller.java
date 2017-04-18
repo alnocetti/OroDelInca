@@ -1,4 +1,9 @@
 package controlador;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
 import org.hibernate.HibernateException;
 
 import dao.UsuarioDAO;
@@ -30,17 +35,25 @@ public class Controller {
 		return UsuarioDAO.getInstance().getUsuarioById(idUsuario).toDTO();
 	}
 	
-	public void getLogin(UsuarioDTO dto) throws UsuarioException{
+	public void getLogin(UsuarioDTO dto) throws UsuarioException, NoSuchAlgorithmException{
 		UsuarioDTO nuevo = UsuarioDAO.getInstance().getUsuarioByName(dto.getNombre()).toDTO();
+		
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		byte[] hash = digest.digest(dto.getClave().getBytes(StandardCharsets.UTF_8));			
+		dto.setClave(Base64.getEncoder().encodeToString(hash));
+		
 		if (dto.getClave().equals(nuevo.getClave())){
 			Principal principal = new Principal();
 			principal.setVisible(true);
 			login.setVisible(false);
+		}else{
+			throw new UsuarioException("Password o usuario incorrectos");
 		}
+			
 		return;
 	}
 	
-	public void agregarUsuario(UsuarioDTO usuarioDTO) throws  UsuarioException{
+	public void agregarUsuario(UsuarioDTO usuarioDTO) throws  UsuarioException, HibernateException, NoSuchAlgorithmException{
 		UsuarioDAO.getInstance().insertUsuario(usuarioDTO);
 		return;
 	}

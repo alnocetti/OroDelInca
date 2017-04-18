@@ -9,6 +9,11 @@ import dto.UsuarioDTO;
 import entities.UsuarioEntity;
 import exceptions.UsuarioException;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -20,6 +25,7 @@ public class UsuarioDAO {
 	 * */
 	
 	private static UsuarioDAO instancia;
+	private UsuarioEntity ue;
 	
 	private UsuarioDAO() {}
 	
@@ -55,14 +61,16 @@ public class UsuarioDAO {
 			throw new UsuarioException("El usuario solicitado no existe");
 	}
 
-	public void insertUsuario(UsuarioDTO usuarioDTO) throws HibernateException, UsuarioException{
+	public void insertUsuario(UsuarioDTO usuarioDTO) throws HibernateException, UsuarioException, NoSuchAlgorithmException{
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		UsuarioEntity ue = (UsuarioEntity) session.createQuery("from UsuarioEntity u where u.nombre = ?")
 				.setParameter(0, usuarioDTO.getNombre())
 				.uniqueResult();
-		
 		if (ue == null){
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(usuarioDTO.getClave().getBytes(StandardCharsets.UTF_8));			
+			usuarioDTO.setClave(Base64.getEncoder().encodeToString(hash));
 			session.save(usuarioDTO.toEntity());
 			session.close();
 		}else{

@@ -13,12 +13,15 @@ import dto.UsuarioDTO;
 import exceptions.UsuarioException;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Toolkit;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
 import java.awt.event.ActionEvent;
 
 
@@ -95,8 +98,8 @@ public class Login extends JFrame {
 				dto.setClave(passwordField.getText());
 				try {
 					Controller.getInstance().getLogin(dto);
-				} catch (UsuarioException e) {
-					// TODO Auto-generated catch block
+				} catch (UsuarioException | NoSuchAlgorithmException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
 				}
 			}

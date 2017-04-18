@@ -7,6 +7,8 @@ import javax.swing.JEditorPane;
 import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 
+import org.hibernate.HibernateException;
+
 import controlador.Controller;
 import dto.UsuarioDTO;
 import exceptions.UsuarioException;
@@ -14,6 +16,7 @@ import exceptions.UsuarioException;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -77,6 +80,12 @@ public class AltaUsuario extends JPanel {
 					textField.setText("");
 					textField_1.setText("");
 					
+					e1.printStackTrace();
+				} catch (HibernateException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoSuchAlgorithmException e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
